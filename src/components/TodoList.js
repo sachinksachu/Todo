@@ -12,7 +12,7 @@ export class TodoList extends Component {
             return(
               <TodoItem
                 key = {itm.id}
-                title = {itm.title}
+                title = {itm.text}
                 onTextEdit ={() => onTextEdit(itm.id)}
                 onTextDelete={() => onTextDelete(itm.id)}
 

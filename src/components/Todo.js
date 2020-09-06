@@ -2,76 +2,78 @@ import React, { Component } from 'react'
 import TodoInput from './TodoInput'
 import TodoList from './TodoList'
 import uuid from "uuid";
-export class Todo extends Component {
-  state = {
-    items : [],
-    item : "",
-    id : uuid(),
-    edit : false
+import { connect } from 'react-redux';
+import { addTodo,clearTodo,deleteTodo } from '../redux';
+import {bindActionCreators} from 'redux'
 
-  };
+const mapStateToProps = state => { // get state from redux store as props
+    return({
+        textObject : state.todoR
+    });
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        addTodo,clearTodo, deleteTodo
+    }, dispatch)
+}
+
+
+export class Todo extends Component {
+	constructor(props){
+        super(props)
+	this.state = {
+	    text : "",
+
+	};
+}
 
   onChangeText = (e) =>{
     this.setState({
-      item : e.target.value
+      text : e.target.value
     })
   }
 
   onSubmitText = (e) => {
-    e.preventDefault();
-    const newItem = {
-      id : this.state.id,
-      title : this.state.item
-    };
-
-    const updatedItem = [...this.state.items, newItem];
-    this.setState({
-      items : updatedItem,
-      item : null,
-      id : uuid(),
-      edit : false
-    })
-
+	e.preventDefault();
+	this.props.addTodo(this.state.text);
   }
 
   onTextEdit = (id) =>{
-    const filteredItems = this.state.items.filter(item => item.id !== id);
+    const filteredItems = this.props.textObject.filter(item => item.id !== id);
 
-    const selectedItem = this.state.items.find(item => item.id === id);
+    const selectedItem = this.props.textObject.find(item => item.id === id);
 
     console.log(selectedItem);
 
     this.setState({
-      items: filteredItems,
-      item: selectedItem.title,
+      item: selectedItem.text,
       edit: true,
       id: id
     });
   };
 
   onTextDelete = (id) => {
-    const filteredItems = this.state.items.filter(item => item.id !== id);
-    this.setState({
-      items: filteredItems
-    });
+    const filteredItems = this.props.textObject.filter(item => item.id !== id);
+    this.props.deleteTodo(filteredItems);
+    console.log(filteredItems);
   };
 
   clearList = () =>{
-    this.setState({
-      items: []
-    });
+    this.props.clearTodo();
   }
   render() {
     return (
       <div>
         <TodoInput 
-            item = {this.state.item}
+            item = {this.state.text}
             onChangeText={this.onChangeText}
             onSubmitText = {this.onSubmitText}
-            edit={this.state.edit}
+            //edit={this.state.edit}
         />
-        <TodoList 
-          items={this.state.items}
+      	
+      	 <TodoList 
+          items={this.props.textObject}
           onTextEdit={this.onTextEdit}
           onTextDelete={this.onTextDelete}
           clearList={this.clearList}
@@ -81,4 +83,4 @@ export class Todo extends Component {
   }
 }
 
-export default Todo
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);

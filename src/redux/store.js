@@ -1,6 +1,7 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import { cakeReducer } from './cakes/cakeReducer';
 import { iceCreamReducer } from './icecream/iceCreamReducer';
+import { todoReducer } from './todo/todoReducer';
 import {logger} from 'redux-logger';
 
 function loadfromlocalStorage() {
@@ -31,7 +32,9 @@ const persistedState = loadfromlocalStorage();
 
 const rootReducer = combineReducers({ //combine reducer
     cakeR: cakeReducer,
-    iceR: iceCreamReducer
+    iceR: iceCreamReducer,
+    todoR : todoReducer
+    
 })
 
 
