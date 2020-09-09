@@ -3,10 +3,9 @@ import {ADD_ITEM, CLEAR_ITEM,DELETE_ITEM,EDIT_TODO} from './todoTypes';
 
 
 
-export const addTodo = text => ({
+export const addTodo = (text,id) => ({
     type: ADD_ITEM,
-    id: uuid(),
-    text
+    text, id
 })
 
 export const clearTodo = () => ({

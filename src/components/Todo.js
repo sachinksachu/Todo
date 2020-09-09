@@ -25,8 +25,9 @@ export class Todo extends Component {
         super(props)
 	this.state = {
 	    text : "",
-	    id : "",
-	    edit: false
+	    id : 0,
+	    edit: false,
+	    count : 0
 
 	};
 }
@@ -39,8 +40,11 @@ export class Todo extends Component {
 
   onSubmitText = (e) => {
 	e.preventDefault();
+	this.setState({
+      		count: this.state.count +1,
+    	});
 	if(!this.state.edit)
-		this.props.addTodo(this.state.text);
+		this.props.addTodo(this.state.text,this.state.count);
 	else
 		this.props.editTodo(this.state.text, this.state.id);
 		
@@ -63,7 +67,8 @@ export class Todo extends Component {
       id: id
     });
     
-    //console.log("kooi",this.props.itemObject);
+    
+    console.log("kooi",id);
   };
 
   onTextDelete = (id) => {
