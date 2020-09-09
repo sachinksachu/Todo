@@ -22,22 +22,22 @@ export default function Header() {
     return (
         <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarBrand href="/">TODO</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
 
           <Nav className="mr-auto" navbar>
 
-            <NavItem>
+            <NavItem className="m-1">
               <NavLink to="/login">Login</NavLink>
               
             </NavItem>
 
-            <NavItem>
+            <NavItem className="m-1">
               <NavLink to="/todo">Todo</NavLink>
             </NavItem>
             
-            <NavItem>
+            <NavItem className="m-1">
               <NavLink to="/cake">Cake</NavLink>
             </NavItem>
 

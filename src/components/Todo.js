@@ -44,9 +44,15 @@ export class Todo extends Component {
       		count: this.state.count +1,
     	});
 	if(!this.state.edit)
+		{
 		this.props.addTodo(this.state.text,this.state.count);
-	else
+		}
+	else{
+		const filteredItems = this.props.textObject.filter(item => item.id !== this.state.id);
+		this.props.deleteTodo(filteredItems);
 		this.props.editTodo(this.state.text, this.state.id);
+		
+		}
 		
 	this.setState({
       		edit: false,
@@ -55,11 +61,11 @@ export class Todo extends Component {
   	}
 
   onTextEdit = (id) =>{
-    const filteredItems = this.props.textObject.filter(item => item.id !== id);
+    
 
     const selectedItem = this.props.textObject.find(item => item.id === id);
 
-    this.props.deleteTodo(filteredItems);
+    
 
     this.setState({
       text: selectedItem.text,
@@ -95,6 +101,8 @@ export class Todo extends Component {
           onTextEdit={this.onTextEdit}
           onTextDelete={this.onTextDelete}
           clearList={this.clearList}
+          edit={this.state.edit}
+          id={this.state.id}
         />
       </div>
     )

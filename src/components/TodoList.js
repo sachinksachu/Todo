@@ -15,33 +15,40 @@ export class TodoList extends Component {
 
 	
   render() {
-    const { items, onTextEdit, onTextDelete , clearList } = this.props;
+    const { items, onTextEdit, onTextDelete , clearList, edit, id } = this.props;
     return (
-      <div>
-        <ul className="list-group my-5">
+      <div className="container mt-3">
+      	<div className="row">
+        <ul className="list-group col-6 m-auto">
         <h3 className="text-capitalize text-center">todo list</h3>
         {
         
           items.sort(compare_id).map((itm) =>{
             return(
-              <TodoItem
+            	<div  className={edit && id===itm.id? "mb-4 bg-danger" : "mb-4 list-color"} >
+              <TodoItem 
                 key = {itm.id}
                 title = {itm.text}
                 onTextEdit ={() => onTextEdit(itm.id)}
                 onTextDelete={() => onTextDelete(itm.id)}
 
               />
+              </div>
             );
           })
         }
         </ul>
+        </div>
+        <div className="row">
         <button
           type="button"
-          className="btn btn-danger btn-block text-capitalize mt-5"
+          className="btn btn-danger btn-block text-capitalize col-4 col-sm-1 m-auto"
           onClick={clearList}
         >
           clear list
         </button>
+         </div>
+      
       </div>
     )
   }
