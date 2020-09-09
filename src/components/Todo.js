@@ -3,18 +3,19 @@ import TodoInput from './TodoInput'
 import TodoList from './TodoList'
 import uuid from "uuid";
 import { connect } from 'react-redux';
-import { addTodo,clearTodo,deleteTodo } from '../redux';
+import { addTodo,clearTodo,deleteTodo,editTodo } from '../redux';
 import {bindActionCreators} from 'redux'
 
 const mapStateToProps = state => { // get state from redux store as props
     return({
-        textObject : state.todoR
+        textObject : state.todoR,
+        
     });
 }
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        addTodo,clearTodo, deleteTodo
+        addTodo,clearTodo, deleteTodo, editTodo
     }, dispatch)
 }
 
@@ -24,6 +25,8 @@ export class Todo extends Component {
         super(props)
 	this.state = {
 	    text : "",
+	    id : "",
+	    edit: false
 
 	};
 }
@@ -36,27 +39,37 @@ export class Todo extends Component {
 
   onSubmitText = (e) => {
 	e.preventDefault();
-	this.props.addTodo(this.state.text);
-  }
+	if(!this.state.edit)
+		this.props.addTodo(this.state.text);
+	else
+		this.props.editTodo(this.state.text, this.state.id);
+		
+	this.setState({
+      		edit: false,
+    	});
+	
+  	}
 
   onTextEdit = (id) =>{
     const filteredItems = this.props.textObject.filter(item => item.id !== id);
 
     const selectedItem = this.props.textObject.find(item => item.id === id);
 
-    console.log(selectedItem);
+    this.props.deleteTodo(filteredItems);
 
     this.setState({
-      item: selectedItem.text,
+      text: selectedItem.text,
       edit: true,
       id: id
     });
+    
+    //console.log("kooi",this.props.itemObject);
   };
 
   onTextDelete = (id) => {
     const filteredItems = this.props.textObject.filter(item => item.id !== id);
     this.props.deleteTodo(filteredItems);
-    console.log(filteredItems);
+    //console.log(filteredItems);
   };
 
   clearList = () =>{
@@ -69,7 +82,7 @@ export class Todo extends Component {
             item = {this.state.text}
             onChangeText={this.onChangeText}
             onSubmitText = {this.onSubmitText}
-            //edit={this.state.edit}
+            edit={this.state.edit}
         />
       	
       	 <TodoList 
