@@ -22,15 +22,24 @@ const mapDispatchToProps = (dispatch) => {
 
 export class Todo extends Component {
 	constructor(props){
-        super(props)
+        super(props);
 	this.state = {
 	    text : "",
 	    id : 0,
 	    edit: false,
-	    count : 0
+      count : 0,
+      search : false
 
 	};
 }
+
+  onSearchText =(e) => {
+    e.preventDefault();
+    this.setState({
+      search : !this.state.search
+    })
+
+  }
 
   onChangeText = (e) =>{
     this.setState({
@@ -94,6 +103,8 @@ export class Todo extends Component {
             onChangeText={this.onChangeText}
             onSubmitText = {this.onSubmitText}
             edit={this.state.edit}
+            onSearchText={this.onSearchText}
+            search ={this.state.search}
         />
       	
       	 <TodoList 
@@ -103,6 +114,8 @@ export class Todo extends Component {
           clearList={this.clearList}
           edit={this.state.edit}
           id={this.state.id}
+          search={this.state.search}
+          item={this.state.text}
         />
       </div>
     )
