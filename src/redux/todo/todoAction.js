@@ -5,7 +5,10 @@ import {ADD_ITEM, CLEAR_ITEM,DELETE_ITEM,EDIT_TODO} from './todoTypes';
 
 export const addTodo = (text,id) => ({
     type: ADD_ITEM,
-    text, id
+    payload :{
+      id:id,
+      text : text
+    }
 })
 
 export const clearTodo = () => ({

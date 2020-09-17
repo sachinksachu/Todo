@@ -4,16 +4,21 @@ import uuid from 'uuid';
 
 
 const addTodo = (state, newTodo) => {
-  const { text} = newTodo;
   
-  const newId = newTodo.id;
+  const { text} = newTodo.payload;
+  
+  //const newId = newTodo.id;
   const todo = {
-    id: newId,
+    id: state.length,
     text,
     edit:false
   };
   const newState = [...state, todo]
-  return newState
+  return newState 
+
+//var todo = action.payload;
+//todo.id = state.lenght;
+//todo.text =
 };
 
 export const todoReducer = (state= [], action) => {

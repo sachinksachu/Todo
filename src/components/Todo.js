@@ -27,7 +27,7 @@ export class Todo extends Component {
 	    text : "",
 	    id : 0,
 	    edit: false,
-      count : 0,
+      //count : 0,
       search : false
 
 	};
@@ -49,12 +49,9 @@ export class Todo extends Component {
 
   onSubmitText = (e) => {
 	e.preventDefault();
-	this.setState({
-      		count: this.state.count +1,
-    	});
 	if(!this.state.edit)
 		{
-		this.props.addTodo(this.state.text,this.state.count);
+		this.props.addTodo(this.state.text);
 		}
 	else{
 		const filteredItems = this.props.textObject.filter(item => item.id !== this.state.id);
